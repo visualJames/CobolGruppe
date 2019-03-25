@@ -1,0 +1,1 @@
+BUILD EXECUTABLE helloworld_cobol USING helloworld.cbl hello.c world.cbl
