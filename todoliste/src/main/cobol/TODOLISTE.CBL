@@ -32,12 +32,17 @@
                 88 HOME     VALUE 2.
        WORKING-STORAGE SECTION.
        01 TEMP-FIELDS.
+        05 CURRENT-DATE.
+          10  WS-CURRENT-YEAR         PIC 9(04).
+          10  WS-CURRENT-MONTH        PIC 9(02).
+          10  WS-CURRENT-DAY          PIC 9(02).
         05  ITEM-TO-DELETE          PIC 999.
         05  NUMBER-OF-TODOS         PIC 999.
            88 LIST-IS-EMPTY VALUE ZERO.
         05  COUNTER                 PIC 999.
         05  TODOLISTE.
             07  TODO-ITEM PIC X(35) OCCURS 999.
+        05 FONTCOLOR                   PIC X(6).
         01 WS-EOF PIC A(1).
         01 WS-TDLIST.
            05 ITEM-ID PIC 9(5).
@@ -74,11 +79,9 @@
           .
 
        ADD-NEW-TODO-ITEM SECTION.
-           ADD 1 TO NUMBER-OF-TODOS
-
+           MOVE FUNCTION CURRENT-DATE TO ITEM-DATE IN WS-TDLIST
            MOVE NEW-TODO-ITEM
              TO TODO-ITEM (NUMBER-OF-TODOS)
-
            MOVE NUMBER-OF-TODOS
              TO ITEM-ID IN WS-TDLIST
            MOVE NEW-TODO-ITEM
@@ -98,10 +101,18 @@
        DISPLAY-ITEM SECTION.
       *hiermit werden im String ITEM-Content alle %20 durch drei
       *Leerzeichen ersetzt
-          INSPECT ITEM-Content in WS-TDLIST REPLACING ALL "%20"
+          INSPECT ITEM-Content IN WS-TDLIST REPLACING ALL "%20"
           BY "   "
-      *
-          DISPLAY "<li>" ITEM-CONTENT IN WS-TDLIST "</li>"
+          EVALUATE ITEM-COLOR IN WS-TDLIST
+              WHEN 0 MOVE "black" TO FONTCOLOR
+              WHEN 2 MOVE "red" TO FONTCOLOR
+              WHEN 1 MOVE "blue" TO FONTCOLOR
+              WHEN 3 MOVE "green" TO FONTCOLOR
+              WHEN 4 MOVE "orange" TO FONTCOLOR
+              WHEN OTHER MOVE "black" TO FONTCOLOR
+          END-EVALUATE
+          DISPLAY "<li> <p style=""color: " FONTCOLOR """>"
+           ITEM-CONTENT IN WS-TDLIST "</p></li>"
           EXIT.
 
        DELETE-ITEM SECTION.
