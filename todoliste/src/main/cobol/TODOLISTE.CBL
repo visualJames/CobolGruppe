@@ -14,6 +14,22 @@
           01 TDLIST-FILE.
              05 ITEM-ID PIC 9(5).
              05 ITEM-CONTENT PIC X(35).
+             05 ITEM-DATE PIC X(21).
+             05 ITEM-STATUS PIC 9.
+                88 TODO     VALUE 0.
+                88 DOING    VALUE 1.
+                88 DONE     VALUE 2.
+                88 CANCELED VALUE 3.
+             05 ITEM-COLOR PIC 9.
+                88 BLACK    VALUE 0.
+                88 BLUE     VALUE 1.
+                88 RED      VALUE 2.
+                88 GREEN    VALUE 3.
+                88 ORANGE   VALUE 4.
+             05 ITEM-TAG PIC 9.
+                88 DEFAULT  VALUE 0.
+                88 WORK     VALUE 1.
+                88 HOME     VALUE 2.
        WORKING-STORAGE SECTION.
        01 TEMP-FIELDS.
         05  ITEM-TO-DELETE          PIC 999.
@@ -65,7 +81,7 @@
 
        DISPLAY-ITEM SECTION.
       *hiermit werden im String ITEM-Content alle %20 durch drei
-      *Leerzeichen ersetzt    
+      *Leerzeichen ersetzt
           INSPECT ITEM-Content in WS-TDLIST REPLACING ALL "%20"
           BY "   "
       *
