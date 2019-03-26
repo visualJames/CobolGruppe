@@ -79,7 +79,15 @@
           .
 
        ADD-NEW-TODO-ITEM SECTION.
-           MOVE FUNCTION CURRENT-DATE TO ITEM-DATE IN WS-TDLIST
+           OPEN INPUT TDLIST
+             PERFORM UNTIL WS-EOF='Y'
+                 READ TDLIST INTO WS-TDLIST
+                    AT END MOVE 'Y' TO WS-EOF
+                    NOT AT END ADD 1 TO NUMBER-OF-TODOS
+                 END-READ
+             END-PERFORM
+           CLOSE TDLIST
+		   MOVE FUNCTION CURRENT-DATE TO ITEM-DATE IN WS-TDLIST
            MOVE NEW-TODO-ITEM
              TO TODO-ITEM (NUMBER-OF-TODOS)
            MOVE NUMBER-OF-TODOS
@@ -112,7 +120,12 @@
               WHEN OTHER MOVE "black" TO FONTCOLOR
           END-EVALUATE
           DISPLAY "<li> <p style=""color: " FONTCOLOR """>"
-           ITEM-CONTENT IN WS-TDLIST "</p></li>"
+             FUNCTION CONCATENATE(
+      	     ITEM-DATE IN WS-TDLIST(7:2) "."
+             ITEM-DATE IN WS-TDLIST(5:2) ", "
+             ITEM-DATE IN WS-TDLIST(9:2) ":"
+             ITEM-DATE IN WS-TDLIST(11:2) ": "
+             ITEM-CONTENT IN WS-TDLIST) "</p></li>"
           EXIT.
 
        DELETE-ITEM SECTION.
