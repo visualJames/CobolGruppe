@@ -38,7 +38,6 @@
         05  TODOLISTE.
             07  TODO-ITEM PIC X(35) OCCURS 999.
         05 FONTCOLOR                   PIC X(6).
-           88 FONTBLACK VALUE "black".
         01 WS-EOF PIC A(1).
         01 WS-TDLIST.
            05 ITEM-ID PIC 9(5).
@@ -114,13 +113,13 @@
               WHEN ORANGE MOVE "orange" TO FONTCOLOR
               WHEN OTHER MOVE "black" TO FONTCOLOR
           END-EVALUATE
-          DISPLAY "<li> <p style=""color: " FONTCOLOR """>"
+          DISPLAY "<li style=""color: " FONTCOLOR """>"
              FUNCTION CONCATENATE(
       	     ITEM-DATE IN WS-TDLIST(7:2) "."
              ITEM-DATE IN WS-TDLIST(5:2) ", "
              ITEM-DATE IN WS-TDLIST(9:2) ":"
              ITEM-DATE IN WS-TDLIST(11:2) ": "
-             ITEM-CONTENT IN WS-TDLIST) "</p></li>"
+             ITEM-CONTENT IN WS-TDLIST) "</li>"
           EXIT.
 
        DELETE-ITEM SECTION.
