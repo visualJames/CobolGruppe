@@ -21,11 +21,6 @@
                 88 DONE     VALUE 2.
                 88 CANCELED VALUE 3.
              05 ITEM-COLOR PIC 9.
-                88 BLACK    VALUE 0.
-                88 BLUE     VALUE 1.
-                88 RED      VALUE 2.
-                88 GREEN    VALUE 3.
-                88 ORANGE   VALUE 4.
              05 ITEM-TAG PIC 9.
                 88 NONE     VALUE 0.
                 88 WORK     VALUE 1.
@@ -43,6 +38,7 @@
         05  TODOLISTE.
             07  TODO-ITEM PIC X(35) OCCURS 999.
         05 FONTCOLOR                   PIC X(6).
+           88 FONTBLACK VALUE "black".
         01 WS-EOF PIC A(1).
         01 WS-TDLIST.
            05 ITEM-ID PIC 9(5).
@@ -110,12 +106,12 @@
       *Leerzeichen ersetzt
           INSPECT ITEM-Content IN WS-TDLIST REPLACING ALL "%20"
           BY "   "
-          EVALUATE ITEM-COLOR IN WS-TDLIST
-              WHEN 0 MOVE "black" TO FONTCOLOR
-              WHEN 2 MOVE "red" TO FONTCOLOR
-              WHEN 1 MOVE "blue" TO FONTCOLOR
-              WHEN 3 MOVE "green" TO FONTCOLOR
-              WHEN 4 MOVE "orange" TO FONTCOLOR
+          EVALUATE TRUE
+              WHEN BLACK MOVE "black" TO FONTCOLOR
+              WHEN RED MOVE "red" TO FONTCOLOR
+              WHEN BLUE MOVE "blue" TO FONTCOLOR
+              WHEN GREEN MOVE "green" TO FONTCOLOR
+              WHEN ORANGE MOVE "orange" TO FONTCOLOR
               WHEN OTHER MOVE "black" TO FONTCOLOR
           END-EVALUATE
           DISPLAY "<li> <p style=""color: " FONTCOLOR """>"
