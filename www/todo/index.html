@@ -50,10 +50,35 @@
 <body>
     Eine ToDo Liste in COBOL<br><p>
         <form name="f1">
-            <p>Todo hinzuf&uuml;gen: <input name="content" type="text" text="50">
-                <input value="Eintragen" type="button" onclick='javascript:addToTodolist()'></p>
-                <input value="Liste löschen" type="button" onclick='javascript:clearList()'></p>
-                <div id="result"></div>
+            <p>Todo hinzuf&uuml;gen: 
+				<input name="content" type="text" text="50">
+					<label> Farbe
+						<select name="color">
+							<option> Schwarz </option>
+							<option> Rot </option>
+							<option> Blau </option>
+							<option> Grün </option>
+							<option> Orange </option>
+						</select>
+					</label>
+                <input value="Eintragen" type="button" onclick='javascript:addToTodolist()'>
+			</p>
+			
+					<label> Status
+						<select name="color">
+							<option> To Do </option>
+							<option> Doing </option>
+							<option> Done </option>
+							<option> Cancelled </option>
+						</select>
+					</label>
+            <input value="Ändern" type="button">
+            <input value="Löschen" type="button">
+			</p>
+            <div id="result"></div>
+            <input value="Alle 'Canceld' löschen" type="button">
+            <input value="Alle 'Done' löschen" type="button">
+            <input value="Ganze Liste löschen" type="button" onclick='javascript:clearList()'>
             </form>
         </body>
         </html>
