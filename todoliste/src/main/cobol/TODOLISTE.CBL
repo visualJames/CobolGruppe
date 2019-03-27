@@ -114,6 +114,9 @@
               WHEN OTHER MOVE "black" TO FONTCOLOR
           END-EVALUATE
           DISPLAY "<li style=""color: " FONTCOLOR """>"
+                    "<input type = ""checkbox"" "
+                    "name = ""todo"" "
+                    "id = "" " ITEM-ID IN WS-TDLIST " "">"
              FUNCTION CONCATENATE(
       	     ITEM-DATE IN WS-TDLIST(7:2) "."
              ITEM-DATE IN WS-TDLIST(5:2) ", "
