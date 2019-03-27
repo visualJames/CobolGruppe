@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/FrankR85/ToDoListe.svg?branch=master)](https://travis-ci.org/FrankR85/ToDoListe)
+[![Build Status](https://travis-ci.org/janilisch/CobolGruppe.svg?branch=master)](https://travis-ci.org/janilisch/CobolGruppe)
 
 ### Minimale ToDo-Liste in COBOL
 Dieses Projekt bietet eine minimale ToDo-Listen Funktionlität in COBOL:
