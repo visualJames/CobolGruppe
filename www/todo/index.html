@@ -39,6 +39,15 @@
         initXmlRequests();
         self.xmlHttpReq.send("action=delete\n");
     }
+    function removeFromList() {
+        initXmlRequests();
+        var form = document.forms['f1'];
+        var word = form.content.value;
+        qstr = 'content=' + escape(word);  // NOTE: no '?' before querystring
+        qstr = qstr + "&action=delete-spe\n"
+        self.xmlHttpReq.send(qstr);
+        showTodoList();
+    }
 
     function updatepage(str){
         document.getElementById("result").innerHTML = str;
@@ -52,7 +61,8 @@
         <form name="f1">
             <p>Todo hinzuf&uuml;gen: <input name="content" type="text" text="50">
                 <input value="Eintragen" type="button" onclick='javascript:addToTodolist()'></p>
-                <input value="Liste löschen" type="button" onclick='javascript:clearList()'></p>
+                <input value="Liste löschen" type="button" onclick='javascript:clearList()'>
+				<input value="Eintrag löschen" type="button" onclick='javascript:removeFromList()'></p>
                 <div id="result"></div>
             </form>
         </body>
