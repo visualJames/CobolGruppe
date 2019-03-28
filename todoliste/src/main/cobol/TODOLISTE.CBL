@@ -16,10 +16,6 @@
              05 ITEM-CONTENT PIC X(35).
              05 ITEM-DATE PIC X(21).
              05 ITEM-STATUS PIC 9.
-                88 TODO     VALUE 0.
-                88 DOING    VALUE 1.
-                88 DONE     VALUE 2.
-                88 CANCELED VALUE 3.
              05 ITEM-COLOR PIC 9.
              05 ITEM-TAG PIC 9.
                 88 NONE     VALUE 0.
@@ -38,6 +34,7 @@
         05  TODOLISTE.
             07  TODO-ITEM PIC X(35) OCCURS 999.
         05 FONTCOLOR                   PIC X(6).
+        05 STATUS-STRING               PIC X(6).
         01 WS-EOF PIC A(1).
         01 WS-TDLIST.
            05 ITEM-ID PIC 9(5).
@@ -113,16 +110,23 @@
               WHEN ORANGE MOVE "orange" TO FONTCOLOR
               WHEN OTHER MOVE "black" TO FONTCOLOR
           END-EVALUATE
+		  EVALUATE TRUE
+              WHEN TODO MOVE "ToDo----" TO STATUS-STRING
+              WHEN DOING MOVE "Doing---" TO STATUS-STRING
+              WHEN DONE MOVE "Done----" TO STATUS-STRING
+              WHEN CANCELED MOVE "Canceled" TO STATUS-STRING
+          END-EVALUATE
           DISPLAY "<li style=""color: " FONTCOLOR """>"
+                    "<label>"
                     "<input type = ""checkbox"" "
                     "name = ""todo"" "
                     "id = "" " ITEM-ID IN WS-TDLIST " "">"
-             FUNCTION CONCATENATE(
-      	     ITEM-DATE IN WS-TDLIST(7:2) "."
-             ITEM-DATE IN WS-TDLIST(5:2) ", "
-             ITEM-DATE IN WS-TDLIST(9:2) ":"
-             ITEM-DATE IN WS-TDLIST(11:2) ": "
-             ITEM-CONTENT IN WS-TDLIST) "</li>"
+                    STATUS-STRING " "
+      	            ITEM-DATE IN WS-TDLIST(7:2) "."
+                    ITEM-DATE IN WS-TDLIST(5:2) ", "
+                    ITEM-DATE IN WS-TDLIST(9:2) ":"
+                    ITEM-DATE IN WS-TDLIST(11:2) " "
+                    ITEM-CONTENT IN WS-TDLIST "</li> </label>"
           EXIT.
 
        DELETE-ITEM SECTION.
